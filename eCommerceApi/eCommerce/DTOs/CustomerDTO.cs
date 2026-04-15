@@ -1,0 +1,26 @@
+namespace eCommerce.DTOs
+{
+    public class CustomerDTO
+    {
+        public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string City { get; set; }
+        public string Address { get; set; }
+    }
+
+    public class CreateCustomerDTO : CustomerDTO
+    {
+    }
+
+    public class UpdateCustomerDTO : CustomerDTO
+    {
+        public int CustomerID { get; set; }
+    }
+
+    public class CustomerResponseDTO : CustomerDTO
+    {
+        public int CustomerID { get; set; }
+        public ICollection<OrderResponseDTO>? Orders { get; set; }
+    }
+}
