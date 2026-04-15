@@ -1,6 +1,9 @@
 using eCommerce.Data;
 using eCommerce.DTOs;
 using eCommerce.Interfaces;
+using eCommerce.Models;
+using Mapster;
+using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Services
 {
@@ -13,29 +16,48 @@ namespace eCommerce.Services
             _context = context;
         }
 
-        public Task<IEnumerable<CategoryResponseDTO>> GetAllAsync()
+        public async Task<IEnumerable<CategoryResponseDTO>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            List<Category> categories = await _context.Categories.ToListAsync();
+            return categories.Adapt<IEnumerable<CategoryResponseDTO>>();
         }
 
-        public Task<CategoryResponseDTO?> GetByIdAsync(int id)
+        public async Task<CategoryResponseDTO?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            Category? category = await _context.Categories.FindAsync(id);
+            return category.Adapt<CategoryResponseDTO>();
         }
 
-        public Task<CategoryResponseDTO> CreateAsync(CreateCategoryDTO createCategory)
+        public async Task<CategoryResponseDTO> CreateAsync(CreateCategoryDTO createCategory)
         {
-            throw new NotImplementedException();
+            Category category = createCategory.Adapt<Category>();
+
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync();
+
+            return category.Adapt<CategoryResponseDTO>();
         }
 
-        public Task<bool> UpdateAsync(int id, UpdateCategoryDTO updateCategory)
+        public async Task<bool> UpdateAsync(int id, UpdateCategoryDTO updateCategory)
         {
-            throw new NotImplementedException();
+            Category? category = await _context.Categories.FindAsync(id);
+            if (category == null) return false;
+
+            updateCategory.Adapt(category);
+            await _context.SaveChangesAsync();
+            
+            return true;
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            Category? category = await _context.Categories.FindAsync(id);
+            if (category == null) return false;
+
+            _context.Categories.Remove(category);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

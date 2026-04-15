@@ -1,6 +1,9 @@
 using eCommerce.Data;
 using eCommerce.DTOs;
 using eCommerce.Interfaces;
+using eCommerce.Models;
+using Mapster;
+using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Services
 {
@@ -13,29 +16,48 @@ namespace eCommerce.Services
             _context = context;
         }
 
-        public Task<IEnumerable<ImageResponseDTO>> GetAllAsync()
+        public async Task<IEnumerable<ImageResponseDTO>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            List<Image> images = await _context.Images.ToListAsync();
+            return images.Adapt<IEnumerable<ImageResponseDTO>>();
         }
 
-        public Task<ImageResponseDTO?> GetByIdAsync(int id)
+        public async Task<ImageResponseDTO?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            Image? image = await _context.Images.FindAsync(id);
+            return image.Adapt<ImageResponseDTO>();
         }
 
-        public Task<ImageResponseDTO> CreateAsync(CreateImageDTO createImage)
+        public async Task<ImageResponseDTO> CreateAsync(CreateImageDTO createImage)
         {
-            throw new NotImplementedException();
+            Image image = createImage.Adapt<Image>();
+
+            _context.Images.Add(image);
+            await _context.SaveChangesAsync();
+
+            return image.Adapt<ImageResponseDTO>();
         }
 
-        public Task<bool> UpdateAsync(int id, UpdateImageDTO updateImage)
+        public async Task<bool> UpdateAsync(int id, UpdateImageDTO updateImage)
         {
-            throw new NotImplementedException();
+            Image? image = await _context.Images.FindAsync(id);
+            if (image == null) return false;
+
+            updateImage.Adapt(image);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            Image? image = await _context.Images.FindAsync(id);
+            if (image == null) return false;
+
+            _context.Images.Remove(image);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

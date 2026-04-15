@@ -1,6 +1,9 @@
 using eCommerce.Data;
 using eCommerce.DTOs;
 using eCommerce.Interfaces;
+using eCommerce.Models;
+using Mapster;
+using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Services
 {
@@ -13,29 +16,48 @@ namespace eCommerce.Services
             _context = context;
         }
 
-        public Task<IEnumerable<OrderItemResponseDTO>> GetAllAsync()
+        public async Task<IEnumerable<OrderItemResponseDTO>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            List<OrderItem> orderItems = await _context.OrderItems.ToListAsync();
+            return orderItems.Adapt<IEnumerable<OrderItemResponseDTO>>();
         }
 
-        public Task<OrderItemResponseDTO?> GetByIdAsync(int id)
+        public async Task<OrderItemResponseDTO?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            OrderItem? orderItem = await _context.OrderItems.FindAsync(id);
+            return orderItem.Adapt<OrderItemResponseDTO>();
         }
 
-        public Task<OrderItemResponseDTO> CreateAsync(CreateOrderItemDTO createOrderItem)
+        public async Task<OrderItemResponseDTO> CreateAsync(CreateOrderItemDTO createOrderItem)
         {
-            throw new NotImplementedException();
+            OrderItem orderItem = createOrderItem.Adapt<OrderItem>();
+
+            _context.OrderItems.Add(orderItem);
+            await _context.SaveChangesAsync();
+
+            return orderItem.Adapt<OrderItemResponseDTO>();
         }
 
-        public Task<bool> UpdateAsync(int id, UpdateOrderItemDTO updateOrderItem)
+        public async Task<bool> UpdateAsync(int id, UpdateOrderItemDTO updateOrderItem)
         {
-            throw new NotImplementedException();
+            OrderItem? orderItem = await _context.OrderItems.FindAsync(id);
+            if (orderItem == null) return false;
+
+            updateOrderItem.Adapt(orderItem);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            OrderItem? orderItem = await _context.OrderItems.FindAsync(id);
+            if (orderItem == null) return false;
+
+            _context.OrderItems.Remove(orderItem);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

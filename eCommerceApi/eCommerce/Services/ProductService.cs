@@ -1,6 +1,9 @@
 using eCommerce.Data;
 using eCommerce.DTOs;
 using eCommerce.Interfaces;
+using eCommerce.Models;
+using Mapster;
+using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Services
 {
@@ -13,29 +16,48 @@ namespace eCommerce.Services
             _context = context;
         }
 
-        public Task<IEnumerable<ProductResponseDTO>> GetAllAsync()
+        public async Task<IEnumerable<ProductResponseDTO>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            List<Product> products = await _context.Products.ToListAsync();
+            return products.Adapt<IEnumerable<ProductResponseDTO>>();
         }
 
-        public Task<ProductResponseDTO?> GetByIdAsync(int id)
+        public async Task<ProductResponseDTO?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            Product? product = await _context.Products.FindAsync(id);
+            return product.Adapt<ProductResponseDTO>();
         }
 
-        public Task<ProductResponseDTO> CreateAsync(CreateProductDTO createProduct)
+        public async Task<ProductResponseDTO> CreateAsync(CreateProductDTO createProduct)
         {
-            throw new NotImplementedException();
+            Product product = createProduct.Adapt<Product>();
+
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+
+            return product.Adapt<ProductResponseDTO>();
         }
 
-        public Task<bool> UpdateAsync(int id, UpdateProductDTO updateProduct)
+        public async Task<bool> UpdateAsync(int id, UpdateProductDTO updateProduct)
         {
-            throw new NotImplementedException();
+            Product? product = await _context.Products.FindAsync(id);
+            if (product == null) return false;
+
+            updateProduct.Adapt(product);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            Product? product = await _context.Products.FindAsync(id);
+            if (product == null) return false;
+
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

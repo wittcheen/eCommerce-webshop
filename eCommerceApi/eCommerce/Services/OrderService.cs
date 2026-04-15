@@ -1,6 +1,9 @@
 using eCommerce.Data;
 using eCommerce.DTOs;
 using eCommerce.Interfaces;
+using eCommerce.Models;
+using Mapster;
+using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Services
 {
@@ -13,29 +16,48 @@ namespace eCommerce.Services
             _context = context;
         }
 
-        public Task<IEnumerable<OrderResponseDTO>> GetAllAsync()
+        public async Task<IEnumerable<OrderResponseDTO>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            List<Order> orders = await _context.Orders.ToListAsync();
+            return orders.Adapt<IEnumerable<OrderResponseDTO>>();
         }
 
-        public Task<OrderResponseDTO?> GetByIdAsync(int id)
+        public async Task<OrderResponseDTO?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            Order? order = await _context.Orders.FindAsync(id);
+            return order.Adapt<OrderResponseDTO>();
         }
 
-        public Task<OrderResponseDTO> CreateAsync(CreateOrderDTO createOrder)
+        public async Task<OrderResponseDTO> CreateAsync(CreateOrderDTO createOrder)
         {
-            throw new NotImplementedException();
+            Order order = createOrder.Adapt<Order>();
+
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
+
+            return order.Adapt<OrderResponseDTO>();
         }
 
-        public Task<bool> UpdateAsync(int id, UpdateOrderDTO updateOrder)
+        public async Task<bool> UpdateAsync(int id, UpdateOrderDTO updateOrder)
         {
-            throw new NotImplementedException();
+            Order? order = await _context.Orders.FindAsync(id);
+            if (order == null) return false;
+
+            updateOrder.Adapt(order);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            Order? order = await _context.Orders.FindAsync(id);
+            if (order == null) return false;
+
+            _context.Orders.Remove(order);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

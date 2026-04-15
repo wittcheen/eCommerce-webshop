@@ -1,6 +1,9 @@
 using eCommerce.Data;
 using eCommerce.DTOs;
 using eCommerce.Interfaces;
+using eCommerce.Models;
+using Mapster;
+using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Services
 {
@@ -13,29 +16,48 @@ namespace eCommerce.Services
             _context = context;
         }
 
-        public Task<IEnumerable<CustomerResponseDTO>> GetAllAsync()
+        public async Task<IEnumerable<CustomerResponseDTO>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            List<Customer> customers = await _context.Customers.ToListAsync();
+            return customers.Adapt<IEnumerable<CustomerResponseDTO>>();
         }
 
-        public Task<CustomerResponseDTO?> GetByIdAsync(int id)
+        public async Task<CustomerResponseDTO?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            Customer? customer = await _context.Customers.FindAsync(id);
+            return customer.Adapt<CustomerResponseDTO>();
         }
 
-        public Task<CustomerResponseDTO> CreateAsync(CreateCustomerDTO createCustomer)
+        public async Task<CustomerResponseDTO> CreateAsync(CreateCustomerDTO createCustomer)
         {
-            throw new NotImplementedException();
+            Customer customer = createCustomer.Adapt<Customer>();
+
+            _context.Customers.Add(customer);
+            await _context.SaveChangesAsync();
+
+            return customer.Adapt<CustomerResponseDTO>();
         }
 
-        public Task<bool> UpdateAsync(int id, UpdateCustomerDTO updateCustomer)
+        public async Task<bool> UpdateAsync(int id, UpdateCustomerDTO updateCustomer)
         {
-            throw new NotImplementedException();
+            Customer? customer = await _context.Customers.FindAsync(id);
+            if (customer == null) return false;
+
+            updateCustomer.Adapt(customer);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            Customer? customer = await _context.Customers.FindAsync(id);
+            if (customer == null) return false;
+            
+            _context.Customers.Remove(customer);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }
