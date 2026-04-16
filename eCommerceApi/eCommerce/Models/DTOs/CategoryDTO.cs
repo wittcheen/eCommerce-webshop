@@ -1,4 +1,4 @@
-namespace eCommerce.DTOs
+namespace eCommerce.Models.DTOs
 {
     public class CategoryDTO
     {

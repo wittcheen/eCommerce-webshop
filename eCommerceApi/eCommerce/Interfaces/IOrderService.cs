@@ -1,4 +1,4 @@
-using eCommerce.DTOs;
+using eCommerce.Models.DTOs;
 
 namespace eCommerce.Interfaces
 {

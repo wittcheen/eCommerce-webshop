@@ -1,7 +1,7 @@
 using eCommerce.Data;
-using eCommerce.DTOs;
 using eCommerce.Interfaces;
 using eCommerce.Models;
+using eCommerce.Models.DTOs;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 
