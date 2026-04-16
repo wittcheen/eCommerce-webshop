@@ -28,9 +28,9 @@ namespace eCommerce.Services
             return category.Adapt<CategoryResponseDTO>();
         }
 
-        public async Task<CategoryResponseDTO> CreateAsync(CreateCategoryDTO createCategory)
+        public async Task<CategoryResponseDTO> CreateAsync(CreateCategoryDTO input)
         {
-            Category category = createCategory.Adapt<Category>();
+            Category category = input.Adapt<Category>();
 
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
@@ -38,12 +38,12 @@ namespace eCommerce.Services
             return category.Adapt<CategoryResponseDTO>();
         }
 
-        public async Task<bool> UpdateAsync(int id, UpdateCategoryDTO updateCategory)
+        public async Task<bool> UpdateAsync(int id, UpdateCategoryDTO input)
         {
             Category? category = await _context.Categories.FindAsync(id);
             if (category == null) return false;
 
-            updateCategory.Adapt(category);
+            input.Adapt(category);
             await _context.SaveChangesAsync();
             
             return true;

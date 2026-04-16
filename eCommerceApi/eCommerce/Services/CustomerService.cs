@@ -28,9 +28,9 @@ namespace eCommerce.Services
             return customer.Adapt<CustomerResponseDTO>();
         }
 
-        public async Task<CustomerResponseDTO> CreateAsync(CreateCustomerDTO createCustomer)
+        public async Task<CustomerResponseDTO> CreateAsync(CreateCustomerDTO input)
         {
-            Customer customer = createCustomer.Adapt<Customer>();
+            Customer customer = input.Adapt<Customer>();
 
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
@@ -38,12 +38,12 @@ namespace eCommerce.Services
             return customer.Adapt<CustomerResponseDTO>();
         }
 
-        public async Task<bool> UpdateAsync(int id, UpdateCustomerDTO updateCustomer)
+        public async Task<bool> UpdateAsync(int id, UpdateCustomerDTO input)
         {
             Customer? customer = await _context.Customers.FindAsync(id);
             if (customer == null) return false;
 
-            updateCustomer.Adapt(customer);
+            input.Adapt(customer);
             await _context.SaveChangesAsync();
 
             return true;

@@ -28,9 +28,9 @@ namespace eCommerce.Services
             return product.Adapt<ProductResponseDTO>();
         }
 
-        public async Task<ProductResponseDTO> CreateAsync(CreateProductDTO createProduct)
+        public async Task<ProductResponseDTO> CreateAsync(CreateProductDTO input)
         {
-            Product product = createProduct.Adapt<Product>();
+            Product product = input.Adapt<Product>();
 
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
@@ -38,12 +38,12 @@ namespace eCommerce.Services
             return product.Adapt<ProductResponseDTO>();
         }
 
-        public async Task<bool> UpdateAsync(int id, UpdateProductDTO updateProduct)
+        public async Task<bool> UpdateAsync(int id, UpdateProductDTO input)
         {
             Product? product = await _context.Products.FindAsync(id);
             if (product == null) return false;
 
-            updateProduct.Adapt(product);
+            input.Adapt(product);
             await _context.SaveChangesAsync();
 
             return true;

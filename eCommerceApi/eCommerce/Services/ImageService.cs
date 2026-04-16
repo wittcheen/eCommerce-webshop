@@ -28,9 +28,9 @@ namespace eCommerce.Services
             return image.Adapt<ImageResponseDTO>();
         }
 
-        public async Task<ImageResponseDTO> CreateAsync(CreateImageDTO createImage)
+        public async Task<ImageResponseDTO> CreateAsync(CreateImageDTO input)
         {
-            Image image = createImage.Adapt<Image>();
+            Image image = input.Adapt<Image>();
 
             _context.Images.Add(image);
             await _context.SaveChangesAsync();
@@ -38,12 +38,12 @@ namespace eCommerce.Services
             return image.Adapt<ImageResponseDTO>();
         }
 
-        public async Task<bool> UpdateAsync(int id, UpdateImageDTO updateImage)
+        public async Task<bool> UpdateAsync(int id, UpdateImageDTO input)
         {
             Image? image = await _context.Images.FindAsync(id);
             if (image == null) return false;
 
-            updateImage.Adapt(image);
+            input.Adapt(image);
             await _context.SaveChangesAsync();
 
             return true;

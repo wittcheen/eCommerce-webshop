@@ -28,9 +28,9 @@ namespace eCommerce.Services
             return orderItem.Adapt<OrderItemResponseDTO>();
         }
 
-        public async Task<OrderItemResponseDTO> CreateAsync(CreateOrderItemDTO createOrderItem)
+        public async Task<OrderItemResponseDTO> CreateAsync(CreateOrderItemDTO input)
         {
-            OrderItem orderItem = createOrderItem.Adapt<OrderItem>();
+            OrderItem orderItem = input.Adapt<OrderItem>();
 
             _context.OrderItems.Add(orderItem);
             await _context.SaveChangesAsync();
@@ -38,12 +38,12 @@ namespace eCommerce.Services
             return orderItem.Adapt<OrderItemResponseDTO>();
         }
 
-        public async Task<bool> UpdateAsync(int id, UpdateOrderItemDTO updateOrderItem)
+        public async Task<bool> UpdateAsync(int id, UpdateOrderItemDTO input)
         {
             OrderItem? orderItem = await _context.OrderItems.FindAsync(id);
             if (orderItem == null) return false;
 
-            updateOrderItem.Adapt(orderItem);
+            input.Adapt(orderItem);
             await _context.SaveChangesAsync();
 
             return true;

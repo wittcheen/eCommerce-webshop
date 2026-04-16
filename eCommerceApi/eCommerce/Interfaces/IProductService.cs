@@ -2,12 +2,8 @@ using eCommerce.Models.DTOs;
 
 namespace eCommerce.Interfaces
 {
-    public interface IProductService
+    public interface IProductService : IGeneric<ProductResponseDTO, CreateProductDTO, UpdateProductDTO>
     {
-        Task<IEnumerable<ProductResponseDTO>> GetAllAsync();
-        Task<ProductResponseDTO?> GetByIdAsync(int id);
-        Task<ProductResponseDTO> CreateAsync(CreateProductDTO createProduct);
-        Task<bool> UpdateAsync(int id, UpdateProductDTO updateProduct);
-        Task<bool> DeleteAsync(int id);
+
     }
 }
