@@ -71,7 +71,19 @@ namespace eCommerce
             });
             #endregion
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("Client", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+                });
+            });
+
             var app = builder.Build();
+            app.UseCors("Client");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
