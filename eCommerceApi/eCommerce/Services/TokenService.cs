@@ -2,7 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using eCommerce.Interfaces;
-using eCommerce.Models.DTOs;
+using eCommerce.Models;
 using Microsoft.IdentityModel.Tokens;
 
 namespace eCommerce.Services
@@ -16,7 +16,7 @@ namespace eCommerce.Services
             _config = config;
         }
 
-        public string GenerateAccessToken(UserResponseDTO user)
+        public string GenerateAccessToken(User user)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

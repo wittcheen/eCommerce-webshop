@@ -1,10 +1,10 @@
-using eCommerce.Models.DTOs;
+using eCommerce.Models;
 
 namespace eCommerce.Interfaces
 {
     public interface ITokenService
     {
-        string GenerateAccessToken(UserResponseDTO user);
+        string GenerateAccessToken(User user);
         string GenerateRefreshToken();
     }
 }
