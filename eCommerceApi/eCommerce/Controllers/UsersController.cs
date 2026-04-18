@@ -1,5 +1,6 @@
 using eCommerce.Interfaces;
 using eCommerce.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.Controllers
@@ -31,13 +32,14 @@ namespace eCommerce.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<UserResponseDTO>> Create(CreateUserDTO user)
-        {
-            UserResponseDTO data = await _service.CreateAsync(user);
-            return CreatedAtAction(nameof(GetById), new { id = data.UserID }, data);
-        }
+        //[HttpPost]
+        //public async Task<ActionResult<UserResponseDTO>> Create(CreateUserDTO user)
+        //{
+        //    UserResponseDTO data = await _service.CreateAsync(user);
+        //    return CreatedAtAction(nameof(GetById), new { id = data.UserID }, data);
+        //}
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, UpdateUserDTO user)
         {
@@ -47,6 +49,7 @@ namespace eCommerce.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

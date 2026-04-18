@@ -1,5 +1,6 @@
 using eCommerce.Interfaces;
 using eCommerce.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.Controllers
@@ -15,6 +16,7 @@ namespace eCommerce.Controllers
             _service = service;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CustomerResponseDTO>>> GetAll()
         {
@@ -22,6 +24,7 @@ namespace eCommerce.Controllers
             return Ok(customers);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<CustomerResponseDTO>> GetById(int id)
         {
@@ -47,6 +50,7 @@ namespace eCommerce.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

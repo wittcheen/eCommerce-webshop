@@ -1,5 +1,6 @@
 using eCommerce.Interfaces;
 using eCommerce.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.Controllers
@@ -31,6 +32,7 @@ namespace eCommerce.Controllers
             return Ok(category);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<CategoryResponseDTO>> Create(CreateCategoryDTO category)
         {
@@ -38,6 +40,7 @@ namespace eCommerce.Controllers
             return CreatedAtAction(nameof(GetById), new { id = data.CategoryID }, data);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, UpdateCategoryDTO category)
         {
@@ -47,6 +50,7 @@ namespace eCommerce.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

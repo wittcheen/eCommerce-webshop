@@ -8,7 +8,6 @@ namespace eCommerce.Models.DTOs
 
     public class CreateUserDTO : UserDTO
     {
-        public string Password { get; set; }
     }
 
     public class UpdateUserDTO : UserDTO

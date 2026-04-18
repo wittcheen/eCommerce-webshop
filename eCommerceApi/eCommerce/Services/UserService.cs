@@ -28,14 +28,16 @@ namespace eCommerce.Services
             return user.Adapt<UserResponseDTO>();
         }
 
-        public async Task<UserResponseDTO> CreateAsync(CreateUserDTO input)
+        public Task<UserResponseDTO> CreateAsync(CreateUserDTO input)
         {
-            User user = input.Adapt<User>();
+            throw new NotImplementedException();
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            //User user = input.Adapt<User>();
 
-            return user.Adapt<UserResponseDTO>();
+            //_context.Users.Add(user);
+            //await _context.SaveChangesAsync();
+
+            //return user.Adapt<UserResponseDTO>();
         }
 
         public async Task<bool> UpdateAsync(int id, UpdateUserDTO input)
