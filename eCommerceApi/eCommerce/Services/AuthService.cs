@@ -87,6 +87,16 @@ namespace eCommerce.Services
             return authResponse;
         }
 
+        public async Task LogoutAsync(string refreshToken)
+        {
+            RefreshToken? token = await _context.RefreshTokens
+                .FirstOrDefaultAsync(r => r.Token == refreshToken);
+            if (token == null) return;
+
+            token.IsRevoked = true;
+            await _context.SaveChangesAsync();
+        }
+
         private bool EmailExists(string email)
         {
             return (_context.Users?.Any(u => u.Email == email)).GetValueOrDefault();

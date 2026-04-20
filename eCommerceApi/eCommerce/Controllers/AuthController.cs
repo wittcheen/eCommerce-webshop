@@ -44,5 +44,16 @@ namespace eCommerce.Controllers
 
             return Ok(data);
         }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            string? token = Request.Cookies["refreshToken"];
+            if (token == null) return NoContent();
+
+            await _service.LogoutAsync(token);
+            Response.Cookies.Delete("refreshToken");
+            return NoContent();
+        }
     }
 }
