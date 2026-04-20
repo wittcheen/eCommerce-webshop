@@ -30,6 +30,14 @@ namespace eCommerce.Data
             builder.Entity<User>()
                 .HasIndex(u => u.Email).IsUnique();
 
+            builder.Entity<User>().HasData(new User
+            {
+                UserID = 1,
+                Name = "Admin",
+                Email = "admin@email.com",
+                Password = "$2a$11$xXvIflJX0kSlTkLgM7mCHuUvh0RdQATh0IakF0wzmi60KXVXKHDBO"
+            });
+
             builder.Entity<RefreshToken>()
                 .HasOne(r => r.User)
                 .WithMany(u => u.RefreshTokens)
