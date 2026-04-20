@@ -75,7 +75,7 @@ namespace eCommerce
             {
                 options.AddPolicy("Client", policy =>
                 {
-                    policy.AllowAnyOrigin()
+                    policy.SetIsOriginAllowed((host) => true)
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
