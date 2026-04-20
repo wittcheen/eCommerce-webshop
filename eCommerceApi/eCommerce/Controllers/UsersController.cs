@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using eCommerce.Interfaces;
 using eCommerce.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +15,18 @@ namespace eCommerce.Controllers
         public UsersController(IUserService service)
         {
             _service = service;
+        }
+
+        [Authorize]
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword(string newPassword)
+        {
+            int userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            var result = await _service.ChangePasswordAsync(userId, newPassword);
+            if (result == false) return Unauthorized();
+
+            return NoContent();
         }
 
         [HttpGet]

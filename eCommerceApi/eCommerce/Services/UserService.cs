@@ -16,6 +16,22 @@ namespace eCommerce.Services
             _context = context;
         }
 
+        public async Task<bool> ChangePasswordAsync(int id, string newPassword)
+        {
+            User? user = await _context.Users.FindAsync(id);
+            if (user == null) return false;
+
+            user.Password = BCrypt.Net.BCrypt.HashPassword(newPassword);
+
+            List<RefreshToken> tokens = await _context.RefreshTokens
+                .Where(r => r.UserID == user.UserID && !r.IsRevoked)
+                .ToListAsync();
+            foreach (RefreshToken token in tokens) token.IsRevoked = true;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<IEnumerable<UserResponseDTO>> GetAllAsync()
         {
             List<User> users = await _context.Users.ToListAsync();
