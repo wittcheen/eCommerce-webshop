@@ -18,6 +18,18 @@ namespace eCommerce.Controllers
         }
 
         [Authorize]
+        [HttpGet("me")]
+        public async Task<ActionResult<UserResponseDTO>> GetUser()
+        {
+            int userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            UserResponseDTO? user = await _service.GetByIdAsync(userId);
+            if (user == null) return NotFound();
+
+            return Ok(user);
+        }
+
+        [Authorize]
         [HttpPost("change-password")]
         public async Task<IActionResult> ChangePassword(string newPassword)
         {
