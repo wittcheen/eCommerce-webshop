@@ -1,0 +1,7 @@
+{
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "vite.config.*": "jsconfig*, tailwind.config.*, postcss.config.*",
+    "package.json": "package-lock.json, .editorconfig"
+  }
+}
