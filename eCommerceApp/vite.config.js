@@ -5,11 +5,13 @@ import vue from '@vitejs/plugin-vue';
 import vueDevTools from 'vite-plugin-vue-devtools';
 import svgLoader from 'vite-svg-loader';
 import viteCompression from 'vite-plugin-compression';
+import tailwindcss from '@tailwindcss/vite';
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    vue(), vueDevTools(), svgLoader(),
+    vue(), vueDevTools(),
+    svgLoader(), tailwindcss(),
     viteCompression({filter: (file) => {
         return /\.(js|css|html|svg)$/i.test(file);
     }})

@@ -1,14 +1,10 @@
-@layer tw-base {
-    @tailwind base;
+@import 'tailwindcss';
+@import 'tailwindcss-primeui';
 
+@layer base {
     body {
         font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
             Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
         text-rendering: optimizeLegibility;
     }
-}
-
-@layer tw-utilities {
-    /* @tailwind components; */
-    @tailwind utilities;
 }

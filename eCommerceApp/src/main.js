@@ -4,7 +4,7 @@ import router from './router';
 import { createPinia } from 'pinia';
 
 import PrimeVue from 'primevue/config';
-import Aura from '@primeuix/themes/aura';
+import Aura from '@/assets/theme.js';
 
 import './assets/styles.css';
 
@@ -19,7 +19,7 @@ app.use(PrimeVue, {
             darkModeSelector: false,
             cssLayer: {
                 name: "primevue",
-                order: "tw-base, primevue, tw-utilities"
+                order: "theme, base, primevue"
             }
         }
     }
