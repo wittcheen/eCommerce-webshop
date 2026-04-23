@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from "vue";
 import { Button, Tag } from "primevue";
+import { formatCurrency } from "@/utils/formats";
 
 const props = defineProps({
     product: {
@@ -22,7 +23,7 @@ const isOutOfStock = computed(() => props.product.stock <= 0);
             <h3 class="text-lg font-medium line-clamp-1">{{ product.name }}</h3>
             <p class="text-sm text-surface-600 line-clamp-2 min-h-10">{{ product.description }}</p>
             <div class="flex flex-col gap-4 mt-4">
-                <p class="text-2xl font-semibold">{{ product.price }}</p>
+                <p class="text-2xl font-semibold">{{ formatCurrency(product.price, "DKK") }}</p>
                 <Button icon="pi pi-shopping-cart" severity="contrast" label="Buy" :disabled="isOutOfStock" :class="{ 'hover:opacity-90': !isOutOfStock }" />
             </div>
         </div>
