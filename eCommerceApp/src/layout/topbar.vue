@@ -3,7 +3,7 @@ import { Button, OverlayBadge } from "primevue";
 </script>
 
 <template>
-    <nav class="fixed w-full h-24 md:h-14 z-[100] px-2 md:px-6 bg-surface-0 border-b-2 border-surface flex justify-between items-center">
+    <nav class="fixed w-full h-14 z-[100] px-2 md:px-6 bg-surface-0 border-b-2 border-surface flex justify-between items-center">
         <router-link to="/" class="pl-2">
             <span class="font-bold text-lg">eCommerce</span>
         </router-link>
