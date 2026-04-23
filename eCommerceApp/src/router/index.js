@@ -9,7 +9,7 @@ const router = createRouter({
             children: [
                 {
                     path: "",
-                    component: () => import("@/views/Dashboard.vue")
+                    component: () => import("@/views/Products.vue")
                 }
             ]
         }
