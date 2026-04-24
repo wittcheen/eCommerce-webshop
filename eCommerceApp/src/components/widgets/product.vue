@@ -1,7 +1,8 @@
 <script setup>
 import { computed } from "vue";
 import { Button, Tag } from "primevue";
-import { formatCurrency } from "@/utils/formats";
+import { formatCurrency } from "@/utils/formats.js";
+import { useCartStore } from "@/stores/cart.js";
 
 const props = defineProps({
     product: {
@@ -9,6 +10,7 @@ const props = defineProps({
     }
 });
 
+const cart = useCartStore();
 const placeholder = "https://placeholder.vn/placeholder/300x200";
 const isOutOfStock = computed(() => props.product.stock <= 0);
 </script>
@@ -24,7 +26,7 @@ const isOutOfStock = computed(() => props.product.stock <= 0);
             <p class="text-sm text-surface-600 line-clamp-2 min-h-10">{{ product.description }}</p>
             <div class="flex flex-col gap-4 mt-4">
                 <p class="text-2xl font-semibold">{{ formatCurrency(product.price, "DKK") }}</p>
-                <Button icon="pi pi-shopping-cart" severity="contrast" label="Buy" :disabled="isOutOfStock" :class="{ 'hover:opacity-90': !isOutOfStock }" />
+                <Button icon="pi pi-shopping-cart" label="Buy" severity="contrast" fluid :disabled="isOutOfStock" @click="cart.add(product)" :class="{ 'hover:opacity-90': !isOutOfStock }" />
             </div>
         </div>
     </div>
