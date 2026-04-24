@@ -27,12 +27,12 @@ const cart = useCartStore();
 
             <main class="size-full p-5 pt-0 overflow-y-auto">
                 <div class="md:px-4 flex flex-col h-full justify-between">
-                    <section class="border-t-2 py-6 flex-1">
-                        <h2 v-if="!cart.items.length" class="text-gray-600 text-md py-1">Bag is empty</h2>
-                        <div v-for="item in cart.items" :key="item.id" class="py-1">
-                            <div class="flex justify-between items-center border-b-1 border-surface">
+                    <section class="border-t-2 py-6 gap-3 flex flex-col">
+                        <h2 v-if="!cart.items.length" class="text-gray-600 text-md">Bag is empty</h2>
+                        <div v-for="item in cart.items" :key="item.id" class="pb-2 border-b-1 border-surface">
+                            <div class="flex justify-between items-center">
                                 <p class="text-md flex-1">{{ item.name }}</p>
-                                <Button aria-label="Remove" icon="pi pi-times" severity="contrast" variant="text" rounded @click="cart.remove(item.id)" class="size-8" />
+                                <Button aria-label="Remove" icon="pi pi-times" severity="contrast" variant="text" rounded @click="cart.remove(item.id)" icon-class="text-red-700" class="size-8" />
                             </div>
                             <p class="text-sm">{{ item.quantity }} &times; {{ formatCurrency(item.price, "DKK") }}</p>
                         </div>
