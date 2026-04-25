@@ -17,6 +17,5 @@ namespace eCommerce.Models.DTOs
     public class CategoryResponseDTO : CategoryDTO
     {
         public int CategoryID { get; set; }
-        public ICollection<ProductResponseDTO>? Products { get; set; }
     }
 }

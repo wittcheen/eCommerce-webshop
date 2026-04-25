@@ -17,9 +17,9 @@ namespace eCommerce.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductResponseDTO>>> GetAll()
+        public async Task<ActionResult<IEnumerable<ProductResponseDTO>>> GetAll([FromQuery] int? categoryId = null)
         {
-            var products = await _service.GetAllAsync();
+            var products = await _service.SearchAsync(categoryId);
             return Ok(products);
         }
 
@@ -33,7 +33,7 @@ namespace eCommerce.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<ActionResult<ProductResponseDTO>> Create(CreateProductDTO product)
         {
             ProductResponseDTO data = await _service.CreateAsync(product);
@@ -41,7 +41,7 @@ namespace eCommerce.Controllers
         }
 
         [Authorize]
-        [HttpPut("{id}")]
+        [HttpPut("edit/{id}")]
         public async Task<IActionResult> Update(int id, UpdateProductDTO product)
         {
             bool result = await _service.UpdateAsync(id, product);
@@ -51,7 +51,7 @@ namespace eCommerce.Controllers
         }
 
         [Authorize]
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             bool result = await _service.DeleteAsync(id);

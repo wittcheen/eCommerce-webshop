@@ -4,6 +4,6 @@ namespace eCommerce.Interfaces
 {
     public interface IProductService : IGeneric<ProductResponseDTO, CreateProductDTO, UpdateProductDTO>
     {
-
+        Task<IEnumerable<ProductResponseDTO>> SearchAsync(int? categoryId);
     }
 }
