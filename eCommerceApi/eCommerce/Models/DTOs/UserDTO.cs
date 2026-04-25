@@ -12,11 +12,10 @@ namespace eCommerce.Models.DTOs
 
     public class UpdateUserDTO : UserDTO
     {
-        public int UserID { get; set; }
     }
 
     public class UserResponseDTO : UserDTO
     {
-        public int UserID { get; set; }
+        public int ID { get; set; }
     }
 }

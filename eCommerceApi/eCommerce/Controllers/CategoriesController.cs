@@ -37,7 +37,7 @@ namespace eCommerce.Controllers
         public async Task<ActionResult<CategoryResponseDTO>> Create(CreateCategoryDTO category)
         {
             CategoryResponseDTO data = await _service.CreateAsync(category);
-            return CreatedAtAction(nameof(GetById), new { id = data.CategoryID }, data);
+            return CreatedAtAction(nameof(GetById), new { id = data.ID }, data);
         }
 
         [Authorize]

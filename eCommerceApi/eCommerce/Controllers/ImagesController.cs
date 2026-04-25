@@ -37,7 +37,7 @@ namespace eCommerce.Controllers
         public async Task<ActionResult<ImageResponseDTO>> Create(CreateImageDTO image)
         {
             ImageResponseDTO data = await _service.CreateAsync(image);
-            return CreatedAtAction(nameof(GetById), new { id = data.ImageID }, data);
+            return CreatedAtAction(nameof(GetById), new { id = data.ID }, data);
         }
 
         [Authorize]

@@ -15,12 +15,11 @@ namespace eCommerce.Models.DTOs
 
     public class UpdateCustomerDTO : CustomerDTO
     {
-        public int CustomerID { get; set; }
     }
 
     public class CustomerResponseDTO : CustomerDTO
     {
-        public int CustomerID { get; set; }
+        public int ID { get; set; }
         public ICollection<OrderResponseDTO>? Orders { get; set; }
     }
 }

@@ -38,7 +38,7 @@ namespace eCommerce.Controllers
         public async Task<ActionResult<OrderResponseDTO>> Create(CreateOrderDTO order)
         {
             OrderResponseDTO data = await _service.CreateAsync(order);
-            return CreatedAtAction(nameof(GetById), new { id = data.OrderID }, data);
+            return CreatedAtAction(nameof(GetById), new { id = data.ID }, data);
         }
 
         [HttpPut("{id}")]

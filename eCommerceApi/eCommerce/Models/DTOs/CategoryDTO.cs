@@ -11,11 +11,10 @@ namespace eCommerce.Models.DTOs
 
     public class UpdateCategoryDTO : CategoryDTO
     {
-        public int CategoryID { get; set; }
     }
 
     public class CategoryResponseDTO : CategoryDTO
     {
-        public int CategoryID { get; set; }
+        public int ID { get; set; }
     }
 }

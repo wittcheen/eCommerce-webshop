@@ -14,11 +14,10 @@ namespace eCommerce.Models.DTOs
 
     public class UpdateOrderItemDTO : OrderItemDTO
     {
-        public int OrderItemID { get; set; }
     }
 
     public class OrderItemResponseDTO : OrderItemDTO
     {
-        public int OrderItemID { get; set; }
+        public int ID { get; set; }
     }
 }

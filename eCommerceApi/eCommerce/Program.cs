@@ -2,6 +2,7 @@
 using System.Text;
 using eCommerce.Data;
 using eCommerce.Interfaces;
+using eCommerce.Mapping;
 using eCommerce.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace eCommerce
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            MapsterConfig.Register();
 
             // Add services to the container.
             builder.Services.AddDbContext<DatabaseContext>(options =>

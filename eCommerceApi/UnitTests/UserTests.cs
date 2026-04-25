@@ -22,8 +22,8 @@ namespace UnitTests
         {
             List<UserResponseDTO> users = new()
             {
-                new UserResponseDTO { UserID = 1, Name = "Test", Email = "test@email.com" },
-                new UserResponseDTO { UserID = 2, Name = "Test1", Email = "test1@email.com" }
+                new UserResponseDTO { ID = 1, Name = "Test", Email = "test@email.com" },
+                new UserResponseDTO { ID = 2, Name = "Test1", Email = "test1@email.com" }
             };
 
             _mockService.Setup(s => s.GetAllAsync())
@@ -43,19 +43,19 @@ namespace UnitTests
         {
             UserResponseDTO user = new()
             {
-                UserID = 1,
+                ID = 1,
                 Name = "Test",
                 Email = "test@email.com"
             };
 
-            _mockService.Setup(s => s.GetByIdAsync(user.UserID))
+            _mockService.Setup(s => s.GetByIdAsync(user.ID))
                 .ReturnsAsync(user);
-            var result = await _controller.GetById(user.UserID);
+            var result = await _controller.GetById(user.ID);
 
             var ok = Assert.IsType<OkObjectResult>(result.Result);
             var data = Assert.IsType<UserResponseDTO>(ok.Value);
 
-            Assert.Equal(user.UserID, data.UserID);
+            Assert.Equal(user.ID, data.ID);
             Assert.Equal(user.Email, data.Email);
         }
 

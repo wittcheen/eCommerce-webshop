@@ -12,11 +12,10 @@ namespace eCommerce.Models.DTOs
     
     public class UpdateImageDTO : ImageDTO
     {
-        public int ImageID { get; set; }
     }
 
     public class ImageResponseDTO : ImageDTO
     {
-        public int ImageID { get; set; }
+        public int ID { get; set; }
     }
 }

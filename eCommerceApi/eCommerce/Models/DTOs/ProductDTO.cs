@@ -17,12 +17,11 @@ namespace eCommerce.Models.DTOs
 
     public class UpdateProductDTO : ProductDTO
     {
-        public int ProductID { get; set; }
     }
 
     public class ProductResponseDTO : ProductDTO
     {
-        public int ProductID { get; set; }
+        public int ID { get; set; }
         public int ProductNumber { get; set; }
     }
 }
