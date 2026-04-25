@@ -1,56 +1,26 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, onMounted, watch } from "vue";
 import Filter from "@/components/widgets/filter.vue";
 import Product from "@/components/widgets/product.vue";
 
-// Sample categories
-const categories = ref([
-    {
-        id: 1,
-        name: "Category 1"
-    },
-    {
-        id: 2,
-        name: "Category 2"
-    }
-]);
+import { categoryService } from "@/services/category.js";
+import { productService } from "@/services/product.js";
 
-// Sample products
-const products = ref([
-    {
-        id: 1,
-        name: "Product 1",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, libero veritatis sunt dicta vitae eum quas dolorem cupiditate pariatur magnam? Ex quaerat pariatur molestias amet rem nihil expedita ipsam repellat!",
-        price: 99,
-        stock: 10,
-        category: 1,
-        image: ""
-    },
-    {
-        id: 2,
-        name: "Product 2",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, libero veritatis sunt dicta vitae eum quas dolorem cupiditate pariatur magnam? Ex quaerat pariatur molestias amet rem nihil expedita ipsam repellat!",
-        price: 99,
-        stock: 0,
-        category: 2,
-        image: ""
-    },
-    {
-        id: 3,
-        name: "Product 3",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, libero veritatis sunt dicta vitae eum quas dolorem cupiditate pariatur magnam? Ex quaerat pariatur molestias amet rem nihil expedita ipsam repellat!",
-        price: 99,
-        stock: 10,
-        category: 1,
-        image: ""
-    }
-]);
-
+const categories = ref([]);
+const products = ref([]);
 const selectedCategory = ref(null);
 
-const filteredProducts = computed(() => {
-    if (!selectedCategory.value) return products.value;
-    return products.value.filter(p => p.category === selectedCategory.value);
+onMounted(async () => {
+    categories.value = await categoryService.getAll();
+    products.value = await productService.getAll();
+});
+
+watch(selectedCategory, async (id) => {
+    if (!id) {
+        products.value = await productService.getAll();
+    } else {
+        products.value = await productService.getByCategory(id);
+    }
 });
 </script>
 
@@ -65,7 +35,7 @@ const filteredProducts = computed(() => {
     </div>
 
     <div class="grid grid-cols-12 gap-4 2xl:max-w-fit place-self-center">
-        <article v-for="p in filteredProducts" :key="p.id" class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-3 p-2">
+        <article v-for="p in products" :key="p.id" class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-3 p-2">
             <Product :product="p" />
         </article>
     </div>
