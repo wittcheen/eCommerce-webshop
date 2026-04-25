@@ -51,6 +51,7 @@ namespace eCommerce.Services
             if (!CategoryExists(input.CategoryID)) return new();
 
             Product product = input.Adapt<Product>();
+            product.ProductNumber = await GenerateProductNumber();
 
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
@@ -90,6 +91,17 @@ namespace eCommerce.Services
         private bool CategoryExists(int id)
         {
             return (_context.Categories?.Any(c => c.CategoryID == id)).GetValueOrDefault();
+        }
+
+        private async Task<int> GenerateProductNumber()
+        {
+            int latest = await _context.Products
+                .OrderByDescending(p => p.ProductNumber)
+                .Select(p => p.ProductNumber)
+                .FirstOrDefaultAsync();
+
+            if (latest == 0) return 100000;
+            return latest + 1;
         }
     }
 }
