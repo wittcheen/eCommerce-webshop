@@ -2,9 +2,11 @@ namespace eCommerce.Models.DTOs
 {
     public class OrderDTO
     {
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public decimal TotalPrice { get; set; }
         public int CustomerID { get; set; }
+
+        public ICollection<OrderItemDTO>? Items { get; set; }
     }
 
     public class CreateOrderDTO : OrderDTO
@@ -18,6 +20,5 @@ namespace eCommerce.Models.DTOs
     public class OrderResponseDTO : OrderDTO
     {
         public int ID { get; set; }
-        public ICollection<OrderItemResponseDTO>? Items { get; set; }
     }
 }

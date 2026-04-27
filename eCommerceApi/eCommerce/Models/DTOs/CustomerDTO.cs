@@ -20,6 +20,5 @@ namespace eCommerce.Models.DTOs
     public class CustomerResponseDTO : CustomerDTO
     {
         public int ID { get; set; }
-        public ICollection<OrderResponseDTO>? Orders { get; set; }
     }
 }
