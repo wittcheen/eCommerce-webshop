@@ -4,16 +4,30 @@ import { Button } from "primevue";
 import Customer from '@/components/forms/customer.vue';
 import { useCartStore } from "@/stores/cart.js";
 import { formatCurrency } from "@/utils/formats.js";
+import { customerService } from "@/services/customer";
+import { orderService } from "@/services/order";
 
 const router = useRouter();
 const cart = useCartStore();
 
-const submitOrder = (customer) => {
+const submitOrder = async (customer) => {
     if (!cart.items.length) return;
 
+    var data = await customerService.create(customer);
+    const order = {
+        customerID: data.id,
+        totalPrice: cart.totalPrice,
+        items: cart.items.map(i => ({
+            productID: i.id,
+            quantity: i.quantity,
+            price: i.price
+        }))
+    };
+    await orderService.create(order);
+
     router.push("/");
+    cart.clear();
     alert("Order placed!");
-    cart.clear()
 };
 </script>
 
