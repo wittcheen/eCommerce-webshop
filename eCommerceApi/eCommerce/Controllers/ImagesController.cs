@@ -33,7 +33,7 @@ namespace eCommerce.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<ActionResult<ImageResponseDTO>> Create(CreateImageDTO image)
         {
             ImageResponseDTO data = await _service.CreateAsync(image);
@@ -41,7 +41,7 @@ namespace eCommerce.Controllers
         }
 
         [Authorize]
-        [HttpPut("{id}")]
+        [HttpPut("edit/{id}")]
         public async Task<IActionResult> Update(int id, UpdateImageDTO image)
         {
             bool result = await _service.UpdateAsync(id, image);
@@ -51,7 +51,7 @@ namespace eCommerce.Controllers
         }
 
         [Authorize]
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             bool result = await _service.DeleteAsync(id);

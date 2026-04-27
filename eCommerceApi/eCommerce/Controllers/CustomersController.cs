@@ -34,14 +34,14 @@ namespace eCommerce.Controllers
             return Ok(customer);
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<ActionResult<CustomerResponseDTO>> Create(CreateCustomerDTO customer)
         {
             CustomerResponseDTO data = await _service.CreateAsync(customer);
             return CreatedAtAction(nameof(GetById), new { id = data.ID }, data);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("edit/{id}")]
         public async Task<IActionResult> Update(int id, UpdateCustomerDTO customer)
         {
             bool result = await _service.UpdateAsync(id, customer);
@@ -51,7 +51,7 @@ namespace eCommerce.Controllers
         }
 
         [Authorize]
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             bool result = await _service.DeleteAsync(id);

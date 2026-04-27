@@ -33,7 +33,7 @@ namespace eCommerce.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<ActionResult<CategoryResponseDTO>> Create(CreateCategoryDTO category)
         {
             CategoryResponseDTO data = await _service.CreateAsync(category);
@@ -41,7 +41,7 @@ namespace eCommerce.Controllers
         }
 
         [Authorize]
-        [HttpPut("{id}")]
+        [HttpPut("edit/{id}")]
         public async Task<IActionResult> Update(int id, UpdateCategoryDTO category)
         {
             bool result = await _service.UpdateAsync(id, category);
@@ -51,7 +51,7 @@ namespace eCommerce.Controllers
         }
 
         [Authorize]
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             bool result = await _service.DeleteAsync(id);
