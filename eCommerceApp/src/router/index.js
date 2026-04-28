@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
-            path: "/dashboard",
+            path: "/admin",
             component: () => import("@/views/Dashboard.vue"),
             meta: { requiresAdmin: true }
         },
@@ -23,6 +24,13 @@ const router = createRouter({
             component: () => import("@/views/Checkout.vue")
         },
     ]
+});
+
+router.beforeEach(async () => {
+    const authStore = useAuthStore();
+    if (!authStore.isInitialized) {
+        await authStore.init();
+    }
 });
 
 export default router;
