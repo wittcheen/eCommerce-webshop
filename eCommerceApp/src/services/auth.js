@@ -9,5 +9,9 @@ export const authService = {
 
     login: (email, password) => {
         return api.post("/auth/login", { json: { email, password } }).json();
+    },
+
+    logout: () => {
+        return api.post("/auth/logout");
     }
 };
