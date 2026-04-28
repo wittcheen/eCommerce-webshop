@@ -4,8 +4,9 @@ const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
-            path: "/checkout",
-            component: () => import("@/views/Checkout.vue")
+            path: "/dashboard",
+            component: () => import("@/views/Dashboard.vue"),
+            meta: { requiresAdmin: true }
         },
         {
             path: "/",
@@ -16,7 +17,11 @@ const router = createRouter({
                     component: () => import("@/views/Products.vue")
                 }
             ]
-        }
+        },
+        {
+            path: "/checkout",
+            component: () => import("@/views/Checkout.vue")
+        },
     ]
 });
 
