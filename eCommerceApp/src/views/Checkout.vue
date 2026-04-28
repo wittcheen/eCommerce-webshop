@@ -14,7 +14,7 @@ const cart = useCartStore();
 const submitOrder = async (customer) => {
     if (!cart.items.length) return;
 
-    var data = await customerService.create(customer);
+    const data = await customerService.create(customer);
     const order = {
         customerID: data.id,
         totalPrice: cart.totalPrice,
@@ -36,12 +36,12 @@ const submitOrder = async (customer) => {
     <Layout page="CHECKOUT">
         <div class="grid md:grid-cols-2 gap-8">
             <section class="order-2 md:order-1">
-                <h1 class="text-2xl font-bold mb-8">Shipping Details</h1>
+                <h1 class="text-2xl font-bold px-1 mb-8">Shipping Details</h1>
                 <Customer @customer="submitOrder" />
             </section>
             <section class="order-1 md:order-2 border border-surface-200 bg-surface-0 rounded-md p-4">
                 <h1 class="text-xl font-bold flex justify-between pb-4">Order Summary
-                    <Button label="Edit Order" @click="$router.push('/')" unstyled class="underline text-base font-normal" />
+                    <Button label="Edit Order" @click="$router.push('/')" unstyled class="underline text-base font-normal text-surface-800" />
                 </h1>
                 <div v-for="item in cart.items" :key="item.id" class="mb-2 flex justify-between">
                     <p>{{ item.quantity }} &times; {{ item.name }}</p>

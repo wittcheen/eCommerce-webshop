@@ -44,28 +44,26 @@ const resolver = ({ values }) => {
 };
 
 const onFormSubmit = async ({ valid, values }) => {
-    if (valid) {
-        emit("customer", values);
-    }
+    if (!valid) return;
+
+    emit("customer", values);
 };
 </script>
 
 <template>
-    <Form v-slot="$form" :initialValues :resolver @submit="onFormSubmit">
-        <div class="grid gap-2 pb-2">
-            <FormField v-slot="slot" :form="$form" name="firstName" label="First Name" required>
-                <InputText name="firstName" type="text" fluid autocomplete="given-name" :class="slot.class" />
-            </FormField>
+    <Form v-slot="$form" :initialValues :resolver @submit="onFormSubmit" class="grid gap-2">
+        <FormField v-slot="slot" :form="$form" name="firstName" label="First Name" required>
+            <InputText name="firstName" type="text" fluid autocomplete="given-name" :class="slot.class" />
+        </FormField>
 
-            <FormField v-slot="slot" :form="$form" name="lastName" label="Last Name" required>
-                <InputText name="lastName" type="text" fluid autocomplete="family-name" :class="slot.class" />
-            </FormField>
+        <FormField v-slot="slot" :form="$form" name="lastName" label="Last Name" required>
+            <InputText name="lastName" type="text" fluid autocomplete="family-name" :class="slot.class" />
+        </FormField>
 
-            <FormField v-slot="slot" :form="$form" name="email" label="Email" required>
-                <InputText name="email" type="text" fluid autocomplete="email" :class="slot.class" />
-            </FormField>
-        </div>
-        <div class="grid grid-cols-2 gap-2 pb-2">
+        <FormField v-slot="slot" :form="$form" name="email" label="Email" required>
+            <InputText name="email" type="text" fluid autocomplete="email" :class="slot.class" />
+        </FormField>
+        <div class="grid grid-cols-2 gap-2">
             <FormField v-slot="slot" :form="$form" name="address" label="Address" required>
                 <InputText name="address" type="text" fluid autocomplete="street-address" :class="slot.class" />
             </FormField>
@@ -74,7 +72,7 @@ const onFormSubmit = async ({ valid, values }) => {
                 <InputText name="city" type="text" fluid :class="slot.class" />
             </FormField>
         </div>
-        <Button type="submit" label="Continue" severity="contrast" rounded fluid class="px-12 py-2.5 flex place-self-end" />
+        <Button type="submit" label="Continue" severity="contrast" rounded fluid class="py-2.5" />
     </Form>
 </template>
 
