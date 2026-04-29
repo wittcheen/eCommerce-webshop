@@ -20,5 +20,7 @@ namespace eCommerce.Models.DTOs
     public class OrderResponseDTO : OrderDTO
     {
         public int ID { get; set; }
+        public CustomerDTO Customer { get; set; }
+        public new ICollection<OrderItemProductDTO>? Items { get; set; }
     }
 }

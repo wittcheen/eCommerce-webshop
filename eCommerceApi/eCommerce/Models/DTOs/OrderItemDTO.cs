@@ -20,4 +20,11 @@ namespace eCommerce.Models.DTOs
     {
         public int ID { get; set; }
     }
+
+    public class OrderItemProductDTO
+    {
+        public ProductResponseDTO Product { get; set; }
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
+    }
 }
