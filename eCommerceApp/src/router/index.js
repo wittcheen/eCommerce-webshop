@@ -7,6 +7,10 @@ const router = createRouter({
         {
             path: "/admin",
             component: () => import("@/views/Dashboard.vue"),
+        },
+        {
+            path: "/admin/products",
+            component: () => import("@/views/ProductManager.vue"),
             meta: { requiresAdmin: true }
         },
         {
@@ -26,10 +30,16 @@ const router = createRouter({
     ]
 });
 
-router.beforeEach(async () => {
+router.beforeEach(async (to, from) => {
     const authStore = useAuthStore();
     if (!authStore.isInitialized) {
         await authStore.init();
+    }
+
+    if (to.matched.some((record) => record.meta.requiresAdmin) && !authStore.isAuthenticated) {
+        return "/admin";
+    } else {
+        return true;
     }
 });
 

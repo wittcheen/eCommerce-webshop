@@ -7,5 +7,11 @@ export const productService = {
 
     getByCategory: (id) => {
         return api.get("/products", { searchParams: { categoryId: id }}).json();
+    },
+
+    create: (data, token) => {
+        return api.post("/products/add", { headers: {
+            Authorization: `Bearer ${token}`
+        }, json: data }).json();
     }
 };

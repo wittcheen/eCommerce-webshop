@@ -56,7 +56,10 @@ const onLogout = async () => {
             <Login />
         </div>
         <div v-else>
-            <h1 class="text-2xl font-bold px-1 mb-8">Orders</h1>
+            <header class="flex justify-between items-center px-1 mb-8">
+                <h1 class="text-2xl font-bold">Orders</h1>
+                <Button label="Manage Products" @click="$router.push('/admin/products')" unstyled class="underline text-surface-800" />
+            </header>
             <h2 v-if="!orders.length" class="text-gray-600 text-md">No orders yet</h2>
             <div class="grid gap-4">
                 <Order v-for="o in orders" :key="o.id" :order="o" />
