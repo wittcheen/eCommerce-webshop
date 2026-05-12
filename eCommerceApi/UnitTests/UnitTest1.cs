@@ -7,7 +7,7 @@ namespace UnitTests
         {
             int a = 1;
             int b = 1;
-            int expected = 3;
+            int expected = 2;
 
             Assert.Equal(expected, a + b); 
         }
